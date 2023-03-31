@@ -1,0 +1,21 @@
+<div class="box">
+  <img class="image" src="assets/login.jpg">
+  <div class="cont">
+    <h1>Log in</h1>
+    <div>
+      <label for="username">
+        Username
+      </label>
+      <input id="username" type="text" placeholder="Username">
+    </div>
+
+    <div>
+      <label for="password">
+        Password
+      </label>
+      <input id="password" type="password" placeholder="Password">
+    </div>
+    <button class="button" type="submit" (click)="goToMovies()">Login</button>
+    <p>Don't have any account? <a [routerLink]="['/register']">Click here</a></p>
+  </div>
+</div>
