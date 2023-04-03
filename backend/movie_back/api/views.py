@@ -1,5 +1,5 @@
 from .models import Genre, Movie, User
-from serializers import *
+from .serializers import *
 from rest_framework.response import Response
 from django.http.response import JsonResponse
 from django.shortcuts import Http404
@@ -28,7 +28,7 @@ def movies_list(request):
 
 def movies_detail(request, movie_id):
     try:
-        return Movie.objects.get(id = movie_id)
+        return Movie.objects.get(id=movie_id)
     except Movie.DoesNotExist as e:
         return JsonResponse({'message': str(e)}, status=400)
     serializer = MovieSerializer(movie)
@@ -42,13 +42,13 @@ class UsersListAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserDetailAPIView(APIView):
-    def get_object(self, id):
+    def get_object(self, pk):
         try:
-            return User.objects.get(id=id)
+            return User.objects.get(id=pk)
         except User.DoesNotExist as e:
             raise Http404
 
-    def get(self, request, id=None):
+    def get(self, request, pk=None):
         user=self.get_object(id)
         serializer=UserSerializer(user)
         return Response(serializer.data)
