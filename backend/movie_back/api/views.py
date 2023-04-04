@@ -8,27 +8,31 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 
+@api_view(['GET'])
 def genres_list(request):
-    genres=Genre.object.all()
+    genres=Genre.objects.all()
     serializer=GenreSerializer(genres, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
 def genres_movies(request, genre_id):
     try:
-        return Movie.objects.filter(id=genre_id)
+        movies = Movie.objects.filter(genre=genre_id)
     except Movie.DoesNotExist as e:
         return JsonResponse({'message': str(e)}, status=400)
-    serializer = MovieSerializer(Movies, many=True)
-    return Response(serializer.data)
-
-def movies_list(request):
-    movies = Movie.object.all()
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def movies_list(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def movies_detail(request, movie_id):
     try:
-        return Movie.objects.get(id=movie_id)
+        movie = Movie.objects.get(id=movie_id)
     except Movie.DoesNotExist as e:
         return JsonResponse({'message': str(e)}, status=400)
     serializer = MovieSerializer(movie)
@@ -37,7 +41,7 @@ def movies_detail(request, movie_id):
 
 class UsersListAPIView(APIView):
     def get(self, request):
-        users = User.object.all()
+        users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -49,6 +53,6 @@ class UserDetailAPIView(APIView):
             raise Http404
 
     def get(self, request, pk=None):
-        user=self.get_object(id)
+        user=self.get_object(pk)
         serializer=UserSerializer(user)
         return Response(serializer.data)

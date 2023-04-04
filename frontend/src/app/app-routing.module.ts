@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {StartComponent} from "./start/start.component";
 import {MovieListComponent} from "./movie-list/movie-list.component";
+import {GenreComponent} from "./genre/genre.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,13 @@ const routes: Routes = [
   {
     path: "movies",
     component: MovieListComponent
+  },
+  {
+    path: 'movies',
+    component: MovieListComponent
+  },
+  { path: 'genre/:genreId',
+    component: GenreComponent
   },
   {
     path: "",

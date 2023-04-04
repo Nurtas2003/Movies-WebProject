@@ -1,10 +1,33 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Movie} from '../movies';
+import {MovieService} from "../movie.service";
+import { Location } from '@angular/common';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent {
+export class MovieListComponent implements OnInit{
+  movies: Movie[]=[]
+
+  searchText: any='';
+
+  constructor(private movieService: MovieService,
+              private route: ActivatedRoute
+  ) {
+  }
+
+  ngOnInit() {
+    this.getMovies();
+  }
+
+  getMovies(): void{
+    this.movieService.getMovies().subscribe((data)=>{
+        console.log(data)
+        this.movies=data;
+      });
+  }
 
 }
