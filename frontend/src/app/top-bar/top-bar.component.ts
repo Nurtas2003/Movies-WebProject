@@ -13,15 +13,11 @@ export class TopBarComponent implements OnInit{
   }
 
   goToHome(){
-    this.router.navigate(["start"])
+    this.router.navigate(["movies"])
   }
   loginButton(){
     this.router.navigate(["login"])
   }
-
-  // loginButton(): void{
-  //   this.router.navigateByUrl('/login');
-  // }
 
   registerButton(){
     this.router.navigate(["register"])

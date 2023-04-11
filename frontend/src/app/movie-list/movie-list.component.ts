@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Movie} from '../movies';
 import {MovieService} from "../movie.service";
-import { Location } from '@angular/common';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -10,16 +8,14 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
   styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit{
-  movies: Movie[]=[]
+  movies: Movie[]=[];
 
   searchText: any='';
 
-  constructor(private movieService: MovieService,
-              private route: ActivatedRoute
-  ) {
+  constructor(private movieService: MovieService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getMovies();
   }
 

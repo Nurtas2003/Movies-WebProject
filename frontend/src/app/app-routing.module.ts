@@ -1,15 +1,28 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {MovieListComponent} from './movie-list/movie-list.component';
+import {GenreComponent} from './genre/genre.component';
+import {StartComponent} from "./start/start.component";
+import {ProfileComponent} from "./profile/profile.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
-import {StartComponent} from "./start/start.component";
-import {MovieListComponent} from "./movie-list/movie-list.component";
-import {GenreComponent} from "./genre/genre.component";
 
 const routes: Routes = [
   {
+    path: "movies",
+    component: MovieListComponent
+  },
+  {
+    path: 'genres/:id',
+    component: GenreComponent
+  },
+  {
     path: "start",
     component: StartComponent
+  },
+  {
+    path: "profile",
+    component: ProfileComponent
   },
   {
     path: "login",
@@ -20,25 +33,19 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: "movies",
-    component: MovieListComponent
-  },
-  {
-    path: 'movies',
-    component: MovieListComponent
-  },
-  { path: 'genre/:genreId',
+    path: 'genre/:genreId',
     component: GenreComponent
   },
   {
     path: "",
-    redirectTo: 'start',
+    redirectTo: 'movies',
     pathMatch:"full"
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

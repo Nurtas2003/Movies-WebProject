@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GenreService} from '../genre.service';
 import {Genre} from '../genres';
+import {Router} from "@angular/router";
 import {Movie} from '../movies';
 
 @Component({
@@ -11,7 +12,12 @@ import {Movie} from '../movies';
 export class MovieFilterComponent implements OnInit{
   genres: Genre[]=[];
 
-  constructor(private genreService: GenreService) {
+  constructor(private genreService: GenreService,
+  public router: Router) {
+  }
+
+  goToHome(){
+    this.router.navigate(["movies"])
   }
 
   ngOnInit(){

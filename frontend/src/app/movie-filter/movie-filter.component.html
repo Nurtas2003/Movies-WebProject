@@ -1,3 +1,4 @@
-<div class="sidenav">
+<div class="cont">
+  <a (click)="goToHome()">Все</a>
   <a *ngFor="let genre of genres" routerLink="/genre/{{genre.id}}"> {{genre.name}} </a>
 </div>

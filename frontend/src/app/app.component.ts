@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 })
 export class AppComponent{
   static isLogged: boolean;
-  title = 'frontend';
+  title = 'KinoKor.kz';
 
   constructor(public router: Router) {
     AppComponent.isLogged=false;

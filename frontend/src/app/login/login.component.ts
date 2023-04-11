@@ -35,6 +35,17 @@ export class LoginComponent implements OnInit{
       localStorage.setItem('username', this.username);
       this.username='';
       this.password='';
+    //   const login = document.getElementById('username');
+    //   const password = document.getElementById('password');
+    //   console.log(login);
+    //   console.log(password);
+    //   if (this.username === 'admin' && this.password === '123456'){
+    //     this.router.navigate(['profile']);
+    //   }else{
+    //     window.alert(`Login or password is incorrect. Please try again`);
+    //     this.username = '';
+    //     this.password = '';
+    //   }
     });
   }
 }
