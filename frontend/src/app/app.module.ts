@@ -16,11 +16,16 @@ import { FilterPipe } from './movie-list/filter.pipe';
 import { ProfileComponent } from './profile/profile.component';
 import {AuthInterceptor} from './AuthInterceptor';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 const routes: Routes = [
   {
     path: "movies",
     component: MovieListComponent
+  },
+  {
+    path: "movies/:id",
+    component: MovieDetailsComponent
   },
   {
     path: "",
@@ -65,6 +70,7 @@ const routes: Routes = [
     MovieFilterComponent,
     FilterPipe,
     ProfileComponent,
+    MovieDetailsComponent,
   ],
   imports: [
     BrowserModule,

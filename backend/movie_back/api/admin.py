@@ -5,3 +5,4 @@ from django.contrib.auth.admin import UserAdmin
 admin.site.register(User)
 admin.site.register(Genre)
 admin.site.register(Movie)
+admin.site.register(Comment)

@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MovieService} from "../movie.service";
-import {GenreService} from "../genre.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {MovieService} from '../movie.service';
+import {GenreService} from '../genre.service';
+import {Movie} from '../movies';
+import {Genre} from '../genres';
 
 @Component({
   selector: 'app-genre',
@@ -9,9 +11,9 @@ import {GenreService} from "../genre.service";
   styleUrls: ['./genre.component.css']
 })
 export class GenreComponent implements OnInit{
-  movies: any;
-  genre: any;
-  searchText: any='';
+  movies: Movie[] = [];
+  genre: Genre | undefined;
+  searchText: any = '';
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -29,15 +31,27 @@ export class GenreComponent implements OnInit{
     this.getGenre();
   }
 
-  getMovies(): void{
-    // @ts-ignore
-    const id: number = this.route.snapshot.paramMap.get('genreId');
-    this.movieService.getMoviesByGenreId(id).subscribe(movies=>this.movies=movies);
+  getMovies(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id !== null) {
+        this.movieService.getMoviesByGenreId(id).subscribe((data) => {
+          this.movies = data;
+          console.log(data);
+        });
+      }
+    });
   }
 
   getGenre(): void {
-    const id = this.route.snapshot.paramMap.get('genreId');
-    this.genresService.getGenre(id).subscribe(genre => this.genre = genre);
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id !== null) {
+        this.genresService.getGenre(id).subscribe((data) => {
+          this.genre = data;
+          console.log(data);
+        });
+      }
+    });
   }
-
 }

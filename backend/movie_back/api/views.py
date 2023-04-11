@@ -56,3 +56,49 @@ class UserDetailAPIView(APIView):
         user=self.get_object(pk)
         serializer=UserSerializer(user)
         return Response(serializer.data)
+
+class CommentsListAPIView(APIView):
+    def get_objects(self, movie_id):
+        try:
+            return Comment.objects.filter(movie=movie_id)
+        except Comment.DoesNotExist as e:
+            raise Http404
+
+    def get(self, request, movie_id=None):
+        comments=self.get_objects(movie_id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, movie_id):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    permission_classes = [IsAuthenticated]
+
+class CommentDetailAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Comment.objects.get(id=pk)
+        except Comment.DoesNotExist as e:
+            raise Http404
+
+    def get(self, request, movie_id=None, pk=None):
+        comment=self.get_object(pk)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+
+    def put(self, request, movie_id=None, pk=None):
+        comment = self.get_object(pk)
+        serializer = CommentSerializer(instance=comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    def delete(self, request, movie_id=None, pk=None):
+        comment = self.get_object(pk)
+        comment.delete()
+        return Response({'message': 'deleted'}, status=status.HTTP_204_NO_CONTENT)

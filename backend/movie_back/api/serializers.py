@@ -27,3 +27,8 @@ class UserSerializer(serializers.Serializer):
         instance.status = validated_data['status']
         instance.save()
         return instance
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment;
+        fields = ('id', 'username', 'description', 'movie')

@@ -6,11 +6,16 @@ import {StartComponent} from "./start/start.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {MovieDetailsComponent} from "./movie-details/movie-details.component";
 
 const routes: Routes = [
   {
     path: "movies",
     component: MovieListComponent
+  },
+  {
+    path: "movies/:id",
+    component: MovieDetailsComponent
   },
   {
     path: 'genres/:id',

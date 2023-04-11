@@ -75,3 +75,29 @@ class User(models.Model):
             'password':self.password,
             'img':self.img,
         }
+
+class Comment(models.Model):
+    username = models.CharField(max_length=255)
+    description=models.TextField(default='')
+    movie=models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+    def __str__(self):
+        return f'{self.id}, {self.username}'
+
+    def to_json(self):
+        return{
+            'id':self.id,
+            'username': {
+                'id': self.user.id,
+                'name': self.user.name
+            },
+            'description':self.description,
+            'movie': {
+                'id': self.movie.id,
+                'name': self.movie.name
+            }
+        }
