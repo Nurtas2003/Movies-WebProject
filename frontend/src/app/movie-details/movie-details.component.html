@@ -1,9 +1,9 @@
 <div *ngIf="movie">
-  <div class="movie-cover">
+  <div class="movie-banner-cover">
     <img src="assets/movies/{{movie.cover}}" alt="movie cover">
   </div>
-  <div class="movie-cont">
-    <div class="movie-cover2">
+  <div class="movie-detail-container">
+    <div class="movie-cover">
       <img src="assets/movies/{{movie.img}}" alt="movie poster">
     </div>
     <div class="movie-detail">
@@ -32,7 +32,6 @@
       <div class="main-area">
         <h1>Reviews</h1>
         <div>
-          <label>Leave a review</label>
           <textarea rows="5" placeholder="Enter the comment" [(ngModel)]="descriptionText"></textarea>
         </div>
         <button type="button" (click)=newComment()>Post</button>

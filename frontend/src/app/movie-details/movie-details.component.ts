@@ -10,7 +10,9 @@ import { Movie } from '../movies';
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
+
 export class MovieDetailsComponent implements OnInit {
+  // @ts-ignore
   movie;
   comments: Commentary[] = [];
   @Input() isLiked = false;
@@ -24,9 +26,10 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private moviesService: MovieService,
-    private location: Location) {
+    private location: Location, ) {
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.getMovie();
   }
 
@@ -44,6 +47,7 @@ export class MovieDetailsComponent implements OnInit {
       }
     });
   }
+
 
   goBack(): void {
     this.location.back();
@@ -71,7 +75,6 @@ export class MovieDetailsComponent implements OnInit {
         if (id !== null) {
           const comment = new Commentary(this.currentUserName as string, id,
             this.descriptionText);
-          // tslint:disable-next-line:no-shadowed-variable
           this.moviesService.createComment(id, comment).subscribe((comment) => {
             this.getMovie();
             this.addClick = false;
@@ -118,6 +121,7 @@ export class MovieDetailsComponent implements OnInit {
     }
   }
 
+  // @ts-ignore
   share(movie): void {
     window.alert(`The movie ${this.movie.name} has been shared!`);
     window.open(`https://t.me/share/url?url=http://localhost:4200/movies/${this.movie.id}&text=Hi! Watch this movie ${movie.name} on the KinoKor.`);
