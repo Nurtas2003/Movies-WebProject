@@ -29,11 +29,11 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: 'movies',
+    redirectTo: "movies",
     pathMatch:"full"
   },
   {
-    path: 'genres/:id',
+    path: "genres/:id",
     component: GenreComponent
   },
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'genre/:genreId',
+    path: "genre/:genreId",
     component: GenreComponent
   },
 ];

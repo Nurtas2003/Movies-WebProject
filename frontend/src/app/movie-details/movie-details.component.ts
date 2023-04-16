@@ -73,8 +73,7 @@ export class MovieDetailsComponent implements OnInit {
       this.route.paramMap.subscribe((params) => {
         const id = params.get('id');
         if (id !== null) {
-          const comment = new Commentary(this.currentUserName as string, id,
-            this.descriptionText);
+          const comment = new Commentary(this.currentUserName as string, id, this.descriptionText);
           this.moviesService.createComment(id, comment).subscribe((comment) => {
             this.getMovie();
             this.addClick = false;

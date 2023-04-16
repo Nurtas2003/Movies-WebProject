@@ -1,6 +1,10 @@
 from django.urls import path
 import rest_framework_jwt.views
 from .views import *
+from rest_framework import routers
+
+r = routers.DefaultRouter()
+r.register('movie2', MovieModelViewSet)
 
 urlpatterns = [
     path('login/', rest_framework_jwt.views.obtain_jwt_token),
@@ -15,3 +19,5 @@ urlpatterns = [
     path('comments/', CommentsListAPIView.as_view()),
     path('comments/<int:pk>/', CommentDetailAPIView.as_view())
 ]
+
+urlpatterns += r.urls

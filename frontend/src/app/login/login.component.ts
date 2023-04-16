@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoginService} from "../login.service";
 import {Location} from "@angular/common";
-import {AppComponent} from "../app.component";
-import { FormBuilder } from '@angular/forms';
-
+import {AppComponent} from '../app.component';
+import {Movie} from "../movies";
+import {MovieService} from "../movie.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,39 +13,100 @@ import { FormBuilder } from '@angular/forms';
 export class LoginComponent implements OnInit{
   constructor(private router:Router,
               private loginService: LoginService,
-              private location: Location
+              private movieSer: MovieService
+
   ) {
+    AppComponent.isLogged = false;
   }
   username='';
   password='';
-  isTaken=false;
+  movies: Movie[]=[];
+
+  name='';
+  description = '';
+  rate='';
+  length='';
+  like=0;
+  img='';
+  imgCover='';
+  genre=0;
+
+  get isLogged(): boolean{
+    return AppComponent.isLogged;
+  }
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token')
+    if(token){
+      AppComponent.isLogged = true
+    }
+    this.getMovies()
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-  goToMovies(){
-    // this.router.navigate(["movies"])
-    this.loginService.login(this.username, this.password).subscribe((data) =>{
-      AppComponent.isLogged=true;
-      this.location.back();
+  login(){
+    this.loginService.login(this.username, this.password).subscribe((data)=>{
       localStorage.setItem('token', data.token);
-      localStorage.setItem('username', this.username);
-      this.username='';
-      this.password='';
-    //   const login = document.getElementById('username');
-    //   const password = document.getElementById('password');
-    //   console.log(login);
-    //   console.log(password);
-    //   if (this.username === 'admin' && this.password === '123456'){
-    //     this.router.navigate(['profile']);
-    //   }else{
-    //     window.alert(`Login or password is incorrect. Please try again`);
-    //     this.username = '';
-    //     this.password = '';
-    //   }
+      AppComponent.isLogged=true;
+
     });
   }
+
+  getMovies(): void{
+    this.movieSer.getMovies().subscribe((data)=>{
+      console.log(data)
+      this.movies=data;
+    });
+  }
+
+  addMovie(): void {
+  //   const newMovie: { cover: string; img: string; rate: string; like: number; name: string; genre: number; length: string; description: string } = {
+  //     name: this.name,
+  //     description: this.description,
+  //     genre: this.genre,
+  //     rate: this.rate,
+  //     length: this.length,
+  //     img: this.img,
+  //     cover: this.imgCover,
+  //     like: this.like
+  //   };
+  //
+  //   // @ts-ignore
+  //   this.movieSer.createMovies(newMovie).subscribe((createdMovie: Movie) => {
+  //     this.movies.push(createdMovie);
+  //
+  //     this.name = '';
+  //     this.description = '';
+  //     this.genre = 0;
+  //     this.rate = '';
+  //     this.length = '';
+  //     this.img = '';
+  //     this.imgCover = '';
+  //     this.like = 0;
+  //   });
+  }
+
+  // deleteMovie(movieId: number): void {
+  //   // Find the index of the movie to delete
+  //   const index = this.movies.findIndex(movie => movie.id === movieId);
+  //
+  //   if (index !== -1) {
+  //     // Remove the movie from the list
+  //     this.movies.splice(index, 1);
+  //
+  //     // Delete the movie from the server
+  //     this.movieSer.deleteMovies(movieId).subscribe();
+  //   }
+  // }
+
+  // updateMovie(movie: Movie): void {
+  //   // @ts-ignore
+  //   this.movieSer.updateMovies(movie.id, movie).subscribe(() => {
+  //     console.log(`Movie with id ${movie.id} was updated successfully.`);
+  //   }, (error) => {
+  //     console.log(`Error occurred while updating movie with id ${movie.id}: ${error}`);
+  //   });
+  // }
+
+
+
 }

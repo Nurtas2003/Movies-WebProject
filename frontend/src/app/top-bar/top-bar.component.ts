@@ -37,5 +37,10 @@ export class TopBarComponent implements OnInit{
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     AppComponent.isLogged = false;
+    this.router.navigate(["movies"])
+  }
+
+  goToProfile(){
+    this.router.navigate(["profile"])
   }
 }

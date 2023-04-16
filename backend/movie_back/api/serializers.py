@@ -12,7 +12,6 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ('id', 'name', 'description', 'rate', 'length', 'img', 'cover', 'like', 'genre')
 
-
 class UserSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     surname = serializers.CharField(read_only=True)
