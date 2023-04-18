@@ -22,16 +22,16 @@ export class MovieService {
     return this.client.get<Movie[]>(`${this.BASE_URL}/api/genres/${id}/`);
   }
 
-  createMovies(id: string, movie: Movie): Observable<any>{
-    return this.client.post(`${this.BASE_URL}/api/movie2/`, movie);
+  createMovies(movie: Movie): Observable<Movie>{
+    return this.client.post<Movie>(`${this.BASE_URL}/api/movie2/`, movie);
   }
 
-  updateMovies(id: string, movie: Movie): Observable<any>{
-    return this.client.put(`${this.BASE_URL}/api/movie2/${id}/`, movie);
+  updateMovies(id: any, movie: Movie): Observable<Movie>{
+    return this.client.put<Movie>(`${this.BASE_URL}/api/movie2/${id}/`, movie);
   }
 
-  deleteMovies(id: string): Observable<any>{
-    return this.client.delete(`${this.BASE_URL}/api/movie2/${id}/`);
+  deleteMovies(id: string): Observable<Movie>{
+    return this.client.delete<Movie>(`${this.BASE_URL}/api/movie2/${id}/`);
   }
 
   getComments(id: string): Observable<Commentary[]>{

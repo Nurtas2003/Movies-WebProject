@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoginService} from "../login.service";
-import {Location} from "@angular/common";
 import {AppComponent} from '../app.component';
 import {Movie} from "../movies";
 import {MovieService} from "../movie.service";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,14 +22,18 @@ export class LoginComponent implements OnInit{
   password='';
   movies: Movie[]=[];
 
-  name='';
-  description = '';
-  rate='';
-  length='';
-  like=0;
-  img='';
-  imgCover='';
-  genre=0;
+  newMovie: Movie = {
+    id: 0,
+    name: '',
+    description: '',
+    genre: 0,
+    rate: '',
+    length: '',
+    img: '',
+    cover: '',
+    like: 0
+  };
+  selectedMovie: | Movie | null = null;
 
   get isLogged(): boolean{
     return AppComponent.isLogged;
@@ -47,7 +51,6 @@ export class LoginComponent implements OnInit{
     this.loginService.login(this.username, this.password).subscribe((data)=>{
       localStorage.setItem('token', data.token);
       AppComponent.isLogged=true;
-
     });
   }
 
@@ -59,54 +62,55 @@ export class LoginComponent implements OnInit{
   }
 
   addMovie(): void {
-  //   const newMovie: { cover: string; img: string; rate: string; like: number; name: string; genre: number; length: string; description: string } = {
-  //     name: this.name,
-  //     description: this.description,
-  //     genre: this.genre,
-  //     rate: this.rate,
-  //     length: this.length,
-  //     img: this.img,
-  //     cover: this.imgCover,
-  //     like: this.like
-  //   };
-  //
-  //   // @ts-ignore
-  //   this.movieSer.createMovies(newMovie).subscribe((createdMovie: Movie) => {
-  //     this.movies.push(createdMovie);
-  //
-  //     this.name = '';
-  //     this.description = '';
-  //     this.genre = 0;
-  //     this.rate = '';
-  //     this.length = '';
-  //     this.img = '';
-  //     this.imgCover = '';
-  //     this.like = 0;
-  //   });
+    this.movieSer.createMovies(this.newMovie).subscribe(() => {
+      this.getMovies();
+      this.newMovie = {
+        id: 0,
+        name: '',
+        description: '',
+        genre: 0,
+        rate: '',
+        length: '',
+        img: '',
+        cover: '',
+        like: 0
+      };
+    }, error => {
+      console.log(error);
+    });
   }
 
-  // deleteMovie(movieId: number): void {
-  //   // Find the index of the movie to delete
-  //   const index = this.movies.findIndex(movie => movie.id === movieId);
-  //
-  //   if (index !== -1) {
-  //     // Remove the movie from the list
-  //     this.movies.splice(index, 1);
-  //
-  //     // Delete the movie from the server
-  //     this.movieSer.deleteMovies(movieId).subscribe();
-  //   }
-  // }
 
-  // updateMovie(movie: Movie): void {
-  //   // @ts-ignore
-  //   this.movieSer.updateMovies(movie.id, movie).subscribe(() => {
-  //     console.log(`Movie with id ${movie.id} was updated successfully.`);
-  //   }, (error) => {
-  //     console.log(`Error occurred while updating movie with id ${movie.id}: ${error}`);
-  //   });
-  // }
+  updateMovie(): void {
+    // @ts-ignore
+    this.movieSer.updateMovies(this.selectedMovie.id.toString(), this.selectedMovie).subscribe(
+      response => {
+        this.getMovies();
+        // @ts-ignore
+        this.selectedMovie = null;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
+  onSelect(movie: Movie | null): void {
+    if (movie === null) {
+      this.selectedMovie = null;
+    } else {
+      this.selectedMovie = movie;
+    }
+  }
 
-
+  deleteMovie(id: number): void {
+    this.movieSer.deleteMovies(id.toString()).subscribe(
+      response => {
+        this.getMovies();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 }

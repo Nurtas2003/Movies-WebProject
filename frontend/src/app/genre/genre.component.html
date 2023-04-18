@@ -1,3 +1,4 @@
+<ng-container *ngIf="!isLogged">
 <div class="cont">
   <input [(ngModel)]="searchText" name="searchText" type="search" placeholder="Search for movies..." aria-label="Search">
 </div>
@@ -19,3 +20,4 @@
     </div>
   </div>
 </div>
+</ng-container>

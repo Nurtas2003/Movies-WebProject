@@ -4,6 +4,7 @@ import {MovieService} from '../movie.service';
 import {GenreService} from '../genre.service';
 import {Movie} from '../movies';
 import {Genre} from '../genres';
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-genre',
@@ -24,6 +25,10 @@ export class GenreComponent implements OnInit{
       this.getMovies();
       this.getGenre();
     }));
+  }
+
+  get isLogged(): boolean{
+    return AppComponent.isLogged;
   }
 
   ngOnInit(): void{
